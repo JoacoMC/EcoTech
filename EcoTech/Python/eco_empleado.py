@@ -19,5 +19,3 @@ class eco_empleado:
     
 
 eco_empleado.insertar('joaquin', 'rengo', '999999', 'hola@gmail.com', '01/03/2024', 50000)
-print("hola mundo")
-print("Chao")
