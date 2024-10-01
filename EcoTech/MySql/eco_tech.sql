@@ -23,14 +23,8 @@ USE `EcoTech` ;
 CREATE TABLE IF NOT EXISTS `EcoTech`.`departamento` (
   `id_departamento` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(100) NULL,
-  `gerente` INT NOT NULL,
-  PRIMARY KEY (`id_departamento`),
-  INDEX `fk_departamento_empleado1_idx` (`gerente` ASC) VISIBLE,
-  CONSTRAINT `fk_departamento_empleado1`
-    FOREIGN KEY (`gerente`)
-    REFERENCES `EcoTech`.`empleado` (`id_empleado`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `gerente` INT NULL,
+  PRIMARY KEY (`id_departamento`))
 ENGINE = InnoDB;
 
 
