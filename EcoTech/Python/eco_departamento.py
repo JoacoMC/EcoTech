@@ -61,21 +61,3 @@ class eco_departamento:
         cnx.close()
         return
 
-
-
-if input('Desea ingresar algún valor? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento: ')
-    gerente = int(input('Indique el id del gerente(si es que posee): '))
-    eco_departamento.insertar(nombre, gerente)
-
-if input('Desea ver algún dato? s/n: ').lower() == 's':
-    eco_departamento.obtener()
-
-if input('Desea modificar algún dato? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento a modificar: ')
-    gerente = int(input('Indique el id del nuevo gerente: '))
-    eco_departamento.modificar(nombre, gerente)
-
-if input('Desea eliminar algún dato? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento a eliminar: ')
-    eco_departamento.eliminar(nombre)

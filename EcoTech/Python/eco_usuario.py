@@ -16,6 +16,3 @@ class eco_usuario:
         cursor.close()
         cnx.close()
         return 
-
-
-eco_usuario.insertar('joaquin', 'muñoz', 'admin')

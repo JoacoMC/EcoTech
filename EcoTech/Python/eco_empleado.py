@@ -63,20 +63,20 @@ class eco_empleado:
 
 
 
-if input('Desea ingresar algún valor? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento: ')
-    gerente = int(input('Indique el id del gerente(si es que posee): '))
-    eco_empleado.insertar(nombre, gerente)
+####if input('Desea ingresar algún valor? s/n: ').lower() == 's':
+  #  nombre = input('Ingrese un nombre de departamento: ')
+  #  gerente = int(input('Indique el id del gerente(si es que posee): '))
+   # eco_empleado.insertar(nombre, gerente)
 
-if input('Desea ver algún dato? s/n: ').lower() == 's':
-    eco_empleado.obtener()
+#if input('Desea ver algún dato? s/n: ').lower() == 's':
+ #   eco_empleado.obtener()
 
-if input('Desea modificar algún dato? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento a modificar: ')
-    gerente = int(input('Indique el id del nuevo gerente: '))
-    eco_empleado.modificar(nombre, gerente)
+#if input('Desea modificar algún dato? s/n: ').lower() == 's':
+  #  nombre = input('Ingrese un nombre de departamento a modificar: ')
+ #   gerente = int(input('Indique el id del nuevo gerente: '))
+   # eco_empleado.modificar(nombre, gerente)
 
-if input('Desea eliminar algún dato? s/n: ').lower() == 's':
-    nombre = input('Ingrese un nombre de departamento a eliminar: ')
-    eco_empleado.eliminar(nombre)
+#if input('Desea eliminar algún dato? s/n: ').lower() == 's':
+ #   nombre = input('Ingrese un nombre de departamento a eliminar: ')
+  #  eco_empleado.eliminar(nombre)
     
