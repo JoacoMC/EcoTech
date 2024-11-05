@@ -25,11 +25,9 @@ class CrudRegistroTiempo:
         sql = 'insert into registro_tiempo (fecha, cantidad_horas, descripcion, empleado_id_empleado, proyecto_id_proyecto) values (%s, %s, %s, %s, %s)'
         values = (registro.fecha, registro.cantidad_horas, registro.descripcion, registro.id_empleado, registro.id_proyecto)
         cursor.execute(sql, values)
-        id_registro = cursor.lastrowid
         cnx.commit()
         cursor.close()
         cnx.close()
-        return id_registro
     
     def obtener(self) -> list[RegistroTiempo]:
         cnx = self.conectar()
