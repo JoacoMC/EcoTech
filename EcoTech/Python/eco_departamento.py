@@ -1,38 +1,50 @@
-import mysql.connector
+from mysql.connector import MySQLConnection, connect
 
-class eco_departamento:
-    
-    def conectar():
-        cnx = mysql.connector.connect(username='root', password='',database='EcoTech')
+class Departamento:
+    def __init__(self, nombre : str, gerente : int) -> None:
+        self.nombre = nombre
+        self.gerente = gerente
+
+class CrudDepartamento:
+    def __init__(self):
+        self.username = 'root'
+        self.password = ''
+        self.database = 'EcoTech'
+
+    def conectar(self) -> MySQLConnection:
+        cnx = connect(username='root', password='',database='EcoTech')
         return cnx
     
-    def insertar(nombre:str, gerente: int):
-        cnx = eco_departamento.conectar()
+    def insertar(self, departamento : Departamento):
+        cnx = self.conectar()
         cursor=cnx.cursor()
         sql = 'insert into departamento(nombre, gerente) values (%s, %s);'
-        values = (nombre, gerente)
+        values = (departamento.nombre, departamento.gerente)
         cursor.execute(sql,values)
         cnx.commit()
         cursor.close()
         cnx.close()
         return 
     
-    def obtener():
-        cnx = eco_departamento.conectar()
+    def obtener(self):
+        cnx = self.conectar()
         cursor=cnx.cursor()
         sql = 'select * from departamento'
         cursor.execute(sql)
         resulset = cursor.fetchall()
+        departamentos = []
         for row in resulset:
-            print('ID: {}, NOMBRE: {}, GERENTE: {}'.format(row[0],row[1],row[2]))
-        cursor.close()
+            dep = Departamento(nombre=row[0], gerente=row[1])
+            departamentos.append(dep)
         cnx.close()
+        return departamentos
 
-    def modificar(nombre:str, gerente: int):
-        cnx = eco_departamento.conectar()
+    def modificar(self, departamento: Departamento, gerente: int) -> bool:
+        cnx = self.conectar()
         cursor=cnx.cursor()
-        sql = 'select id_departamento from departamento where nombre=%s;'
-        cursor.execute(sql, nombre)
+        sql = 'select id_departamento from departamento where nombre=%s'
+        values = (departamento.nombre)
+        cursor.execute(sql.values)
         result = cursor.fetchone()
         if result is not None:
             id_departamento = result[0]
@@ -44,11 +56,11 @@ class eco_departamento:
         cnx.close()
         return
 
-    def eliminar(nombre:str):
-        cnx = eco_departamento.conectar()
+    def eliminar(self, departamento: Departamento) -> bool:
+        cnx = self.conectar()
         cursor=cnx.cursor()
         sql = 'select id_departamento from departamento where nombre=%s ;'
-        valor = (nombre,)
+        valor = (departamento.nombre)
         cursor.execute(sql, valor)
         result = cursor.fetchone()
         if result is not None:

@@ -1,7 +1,7 @@
 #config
 #colors
-color1 = "#000b13"
-color2 = "#0c232c"
-color3 = "#4f5e66"
-color4 = "#b2b4bb"
-color5 = "#f8f8f8"
+color1 = "#060606"
+color2 = "#16161e"
+color3 = "#2d2e37"
+color4 = "#454557"
+color5 = "#ffffff"
