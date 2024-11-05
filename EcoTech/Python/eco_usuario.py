@@ -46,11 +46,20 @@ class CrudUsuario:
         cnx.close()
         return usuarios
 
-    def modificar(self, usuario : Usuario):
+    def buscar(self, buscar : int):
+        cnx = self.conectar()
+        cursor = cnx.cursor()
+        sql1 = 'select nombre, contraseña, permiso, id_empleado from usuario where id_usuario=%s'
+        values1 = (buscar,)
+        cursor.execute(sql1,values1)
+        result = cursor.fetchone()
+        return result
+    
+    def modificar(self, nombre : str, contraseña : str, permiso : str, id_usuario : int):
         cnx = self.conectar()
         cursor = cnx.cursor()
         sql = 'update usuario set nombre = %s, contraseña = %s, permiso = %s where id_usuario = %s'
-        values = (usuario.nombre, usuario.contraseña, usuario.permiso, usuario.id_usuario)
+        values = (nombre, contraseña, permiso, id_usuario)
         cursor.execute(sql, values)
         cnx.commit()
         filas_afectadas = cursor.rowcount
@@ -58,11 +67,11 @@ class CrudUsuario:
         cnx.close()
         return filas_afectadas > 0
 
-    def eliminar(self, usuario : Usuario):
+    def eliminar(self, id_usuario):
         cnx = self.conectar()
         cursor = cnx.cursor()
         sql = 'delete from usuario where id_usuario = %s'
-        values = (usuario.id_usuario,)
+        values = (id_usuario,)
         cursor.execute(sql, values)
         cnx.commit()
         filas_afectadas = cursor.rowcount

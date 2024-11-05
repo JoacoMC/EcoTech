@@ -34,42 +34,48 @@ class CrudDepartamento:
         resulset = cursor.fetchall()
         departamentos = []
         for row in resulset:
-            dep = Departamento(nombre=row[0], gerente=row[1])
+            dep = Departamento(nombre=row[1], gerente=row[2])
             departamentos.append(dep)
         cnx.close()
         return departamentos
-
-    def modificar(self, departamento: Departamento, gerente: int) -> bool:
+    
+    def buscar(self, buscar):
         cnx = self.conectar()
-        cursor=cnx.cursor()
-        sql = 'select id_departamento from departamento where nombre=%s'
-        values = (departamento.nombre)
-        cursor.execute(sql.values)
+        cursor = cnx.cursor()
+        sql1 = 'select nombre, gerente from departamento where id_departamento=%s'
+        values1 = (buscar,)
+        cursor.execute(sql1,values1)
         result = cursor.fetchone()
-        if result is not None:
-            id_departamento = result[0]
-            sql2 = 'update departamento set gerente=%s where id_departamento=%s'
-            values2 = (gerente, id_departamento)
-            cursor.execute(sql2, values2)
+        return result
+    
+    def modificar(self, nombre : str, gerente: int, id_departamento) -> bool:
+        cnx = self.conectar()
+        cursor = cnx.cursor()
+        sql = 'update departamento set nombre= %s, gerente= %s where id_departamento = %s'
+        values = (nombre, gerente,id_departamento)
+        try:
+            cursor.execute(sql, values)
             cnx.commit()
+            filas_afectadas = cursor.rowcount
+            if filas_afectadas > 0:
+                return True, "Modificación exitosa."
+            else:
+                return False, "No se encontró el departamento o no hubo cambios."
+        except Exception as e:
+            return False, f"Error en la modificación: {str(e)}"
+        finally:
+            cursor.close()
+            cnx.close()
+
+    def eliminar(self, id_departamento: int) -> bool:
+        cnx = self.conectar()
+        cursor = cnx.cursor()
+        sql = 'delete from departamento where id_departamento = %s'
+        values = (id_departamento,)
+        cursor.execute(sql, values)
+        cnx.commit()
+        filas_afectadas = cursor.rowcount
         cursor.close()
         cnx.close()
-        return
-
-    def eliminar(self, departamento: Departamento) -> bool:
-        cnx = self.conectar()
-        cursor=cnx.cursor()
-        sql = 'select id_departamento from departamento where nombre=%s ;'
-        valor = (departamento.nombre)
-        cursor.execute(sql, valor)
-        result = cursor.fetchone()
-        if result is not None:
-            id_departamento = result[0]
-            sql2 = 'delete from departamento where id_departamento=%s;'
-            valor2 = (id_departamento,)
-            cursor.execute(sql2, valor2)
-            cnx.commit()
-        cursor.close()
-        cnx.close()
-        return
+        return filas_afectadas > 0
 

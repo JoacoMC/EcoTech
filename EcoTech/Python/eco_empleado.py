@@ -52,35 +52,43 @@ class CrudEmpleado:
         cnx.close()
         return empleados
     
-    def modificar(self, empleado:Empleado, salario:int) -> bool:
+    def buscar(self, buscar):
         cnx = self.conectar()
         cursor = cnx.cursor()
-        sql = 'select id_empleado from empleado where nombre=%s'
-        values = (empleado.nombre)
-        cursor.execute(sql, values)
+        sql1 = 'select nombre, direccion, telefono, correo, inicio_contrato, salario, departamento_id_departamento from empleado where id_empleado=%s'
+        values1 = (buscar,)
+        cursor.execute(sql1,values1)
         result = cursor.fetchone()
-        if result is not None:
-            id_empleado = result[0]
-            sql2 = 'update mecanico set salario=%s where id_empleado=%s'
-            values2 = (salario,id_empleado)
-            cursor.execute(sql2, values2)
-            cnx.commit()
-        cursor.close()
-        cnx.close()
-        return True
-    def eliminar(self, empleado:Empleado) -> bool:
+        return result
+    
+    def modificar(self, empleado:Empleado, id_empleado) -> bool:
         cnx = self.conectar()
         cursor = cnx.cursor()
-        sql = 'select id_empleado from persona where nombre=%s'
-        values = (empleado.apellido)
-        cursor.execute(sql, values)
-        result = cursor.fetchone()
-        if result is not None:
-            id_empleado = result[0]
-            sql2 = 'delete from empleado where id_persona=%s;'
-            values2 = (id_empleado)
-            cursor.execute(sql2, values2)
+        sql = 'UPDATE empleado SET nombre = %s, direccion = %s, telefono = %s, correo = %s, inicio_contrato = %s, salario = %s, departamento_id_departamento = %s WHERE id_empleado = %s'
+        values = (empleado.nombre, empleado.direccion, empleado.telefono, empleado.correo, empleado.inicio_contrato, empleado.salario, empleado.departamento_id_departamento, id_empleado)
+        
+        try:
+            cursor.execute(sql, values)
             cnx.commit()
+            filas_afectadas = cursor.rowcount
+            if filas_afectadas > 0:
+                return True, "Modificación exitosa."
+            else:
+                return False, "No se encontró el empleado o no hubo cambios."
+        except Exception as e:
+            return False, f"Error en la modificación: {str(e)}"
+        finally:
+            cursor.close()
+            cnx.close()
+
+    def eliminar(self, id_usuario) -> bool:
+        cnx = self.conectar()
+        cursor = cnx.cursor()
+        sql = 'delete from empleado where id_empleado = %s'
+        values = (id_usuario,)
+        cursor.execute(sql, values)
+        cnx.commit()
+        filas_afectadas = cursor.rowcount
         cursor.close()
         cnx.close()
-        return True
+        return filas_afectadas > 0

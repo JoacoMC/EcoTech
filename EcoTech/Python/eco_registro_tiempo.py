@@ -74,11 +74,20 @@ class CrudRegistroTiempo:
         cnx.close()
         return registros
 
-    def modificar(self, id_registro: int, nuevas_horas: int, nueva_descripcion: str) -> bool:
+    def buscar(self, buscar):
         cnx = self.conectar()
         cursor = cnx.cursor()
-        sql = 'update registro_tiempo set cantidad_horas = %s, descripcion = %s where id_registro_tiempo = %s'
-        values = (nuevas_horas, nueva_descripcion, id_registro)
+        sql1 = 'select fecha, cantidad_horas, descripcion, empleado_id_empleado, proyecto_id_proyecto from registro_tiempo where proyecto_id_proyecto = %s'
+        values1 = (buscar,)
+        cursor.execute(sql1,values1)
+        result = cursor.fetchone()
+        return result
+    
+    def modificar(self, id_registro: int, fecha : date, nuevas_horas: int, nueva_descripcion: str, id_empleado : int, id_proyecto : int) -> bool:
+        cnx = self.conectar()
+        cursor = cnx.cursor()
+        sql = 'update registro_tiempo set fecha = %s, cantidad_horas = %s, descripcion = %s, empleado_id_empleado=%s, proyecto_id_proyecto=%s where id_registro_tiempo = %s'
+        values = (fecha, nuevas_horas, nueva_descripcion, id_empleado, id_proyecto, id_registro)
         cursor.execute(sql, values)
         cnx.commit()
         filas_afectadas = cursor.rowcount
