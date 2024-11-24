@@ -1,13 +1,5 @@
 from mysql.connector import MySQLConnection, connect
-
-class Usuario:
-
-    def __init__(self, id_usuario : int, nombre : str, contraseña : str, permiso : str, id_empleado: int):
-        self.id_usuario = id_usuario
-        self.nombre = nombre
-        self.contraseña = contraseña
-        self.permiso = permiso
-        self.id_empleado = id_empleado
+from modelo import Usuario
 
 
 class CrudUsuario:

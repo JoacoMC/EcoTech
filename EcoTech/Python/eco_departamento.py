@@ -1,9 +1,5 @@
 from mysql.connector import MySQLConnection, connect
-
-class Departamento:
-    def __init__(self, nombre : str, gerente : int) -> None:
-        self.nombre = nombre
-        self.gerente = gerente
+from modelo import Departamento
 
 class CrudDepartamento:
     def __init__(self):

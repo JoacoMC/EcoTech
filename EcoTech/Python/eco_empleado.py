@@ -1,15 +1,5 @@
 from mysql.connector import MySQLConnection, connect
-from datetime import date
-
-class Empleado:
-    def __init__(self, nombre: str, direccion: str, telefono: str, correo: str, inicio_contrato: date, salario:int, departamento_id_departamento : int) -> None:
-        self.nombre = nombre
-        self.direccion = direccion
-        self.telefono = telefono
-        self.correo = correo
-        self.inicio_contrato = inicio_contrato
-        self.salario = salario
-        self.departamento_id_departamento = departamento_id_departamento
+from modelo import Empleado
 
 class CrudEmpleado:
     def __init__(self) -> None:

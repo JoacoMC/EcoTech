@@ -1,12 +1,8 @@
-from eco_empleado import CrudEmpleado, Empleado
-from eco_usuario import CrudUsuario, Usuario
-from eco_departamento import CrudDepartamento, Departamento 
-from eco_proyecto import CrudProyecto, Proyecto 
-from eco_registro_tiempo import CrudRegistroTiempo, RegistroTiempo
-from eco_proyecto_empleado import CrudProyectoEmpleado, Proyecto_empleado
+from datos import CrudDepartamento,CrudEmpleado,CrudProyecto,CrudProyectoEmpleado,CrudRegistroTiempo,CrudUsuario
+from modelo import Proyecto, Proyecto_empleado, Usuario, Departamento, Empleado, RegistroTiempo
 import tkinter as tk
 import config
-from tkinter.ttk import Treeview
+from tkinter.ttk import Treeview, Combobox
 from tkinter import messagebox
 from datetime import datetime
 
@@ -382,12 +378,19 @@ class Aplicacion():
         self.modificar_usuario_frame = tk.Frame(self.usuariohud, bg= config.color5)
         self.modificar_usuario_frame.place(x=150, y= 25, width=900, height=600)
 
-        tk.Label(self.modificar_usuario_frame, text="ID Usuario").grid(row=0, column=0, padx=10, pady=10)
-        self.id_usuario_ety = tk.Entry(self.modificar_usuario_frame)
-        self.id_usuario_ety.grid(row=0, column=1, padx=10, pady=10)
-        # Botón de ingresos
+        tk.Label(self.modificar_usuario_frame, text="Usuarios").grid(row=4, column=0, padx=10, pady=10)
+        self.usuario_cmb = Combobox(self.modificar_usuario_frame, state="readonly")
+        self.usuario_cmb.grid(row=4, column=1, padx=10, pady=10)
+        self.cargar_usuarios()
         self.buscar_btn = tk.Button(self.modificar_usuario_frame, text="Buscar", command=self.buscar_usuario)
-        self.buscar_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=20)
+        self.buscar_btn.grid(row=5, column=0, columnspan=2, padx=20, pady=20)
+
+    def cargar_usuarios(self):
+        usuarios = CrudUsuario().obtener()
+        values = [] # valores de la lista desplegable del Combobox
+        for c in usuarios:
+            values.append("{}".format(c.nombre))
+        self.usuario_cmb['values'] = values   
 
     def buscar_usuario(self):
         try:

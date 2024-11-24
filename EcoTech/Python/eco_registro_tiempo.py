@@ -1,13 +1,6 @@
 from mysql.connector import MySQLConnection, connect
 from datetime import date
-
-class RegistroTiempo:
-    def __init__(self, fecha: date, cantidad_horas: int, descripcion: str, id_empleado: int, id_proyecto: int) -> None:
-        self.fecha = fecha
-        self.cantidad_horas = cantidad_horas
-        self.descripcion = descripcion
-        self.id_empleado = id_empleado
-        self.id_proyecto = id_proyecto
+from modelo import RegistroTiempo
 
 class CrudRegistroTiempo:
     def __init__(self) -> None:

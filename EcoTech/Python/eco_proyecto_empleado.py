@@ -1,9 +1,6 @@
 from mysql.connector import MySQLConnection, connect
+from modelo import Proyecto_empleado
 
-class Proyecto_empleado:
-    def __init__(self, id_proyecto: int, id_empleado: int) -> None:
-        self.id_proyecto = id_proyecto
-        self.id_empleado = id_empleado
 
 class CrudProyectoEmpleado:
     def __init__(self) -> None:

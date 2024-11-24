@@ -1,14 +1,6 @@
 from mysql.connector import MySQLConnection, connect
 from datetime import date
-
-class Proyecto:
-    def __init__(self,nombre: str, descripcion: str, fecha_inicio: date) -> None:
-        self.nombre = nombre
-        self.descripcion = descripcion
-        self.fecha_inicio = fecha_inicio
-
-    #def agregar_proyecto(self, proyecto: Proyecto):
-     #   self.lista_proyectos.append(proyecto)
+from modelo import Proyecto
 
 class CrudProyecto:
     def __init__(self) -> None:
